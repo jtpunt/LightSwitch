@@ -20,6 +20,8 @@ import com.example.lightswitch.R
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
+
+
     fun buildStrRequests(
         url: String?,
         toggleBtn: ToggleButton,
@@ -97,6 +99,7 @@ class HomeFragment : Fragment() {
         setOnCheckedListener("http://192.168.254.202:5000/activate/2", toggleBtn1, justOpened, 0, queue);
         setOnCheckedListener("http://192.168.254.202:5000/activate/3", toggleBtn2, justOpened, 1, queue);
         Log.d("STATE1", "DONE building request")
+
         return root
     }
 }

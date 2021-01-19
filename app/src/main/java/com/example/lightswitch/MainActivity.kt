@@ -3,7 +3,6 @@ package com.example.lightswitch
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
-import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
@@ -12,10 +11,13 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
+import com.mongodb.MongoClient
+import com.mongodb.MongoClientURI
+import com.mongodb.client.MongoIterable
+import org.json.JSONObject
 
 
 class MainActivity : AppCompatActivity() {
@@ -42,9 +44,26 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        val jsonfile: String = applicationContext.assets.open("credentials.json").bufferedReader().use {it.readText()}
+        val jsonObject = JSONObject(jsonfile)
+        Log.d("STATE1", "${jsonObject["host"]}");
+        val host = jsonObject["host"]
+        val port = jsonObject["port"]
+        val db = jsonObject["db"]
+        val username = jsonObject["username"]
+        val password = jsonObject["password"]
+        val queryString = jsonObject["queryString"]
+        val connectionString = "mongodb://$username:$password@$host/$db?$queryString";
+        val uri: (MongoClientURI) =  MongoClientURI(connectionString);
+        val mongoClient: (MongoClient) = MongoClient(uri);
+        //val myDb: (MongoDatabase) = mongoClient.getDawwwwwwwwwwwwwtabase(uri.database);
 
+        val myDbs: MongoIterable<String> = mongoClient.listDatabaseNames();
+        val dhtSensorsDb = mongoClient.getDatabase("dht-sensors");
+        val dhtDBCollection: MongoIterable<String> = dhtSensorsDb.listCollectionNames();
+        Log.d("STATE1" , dhtSensorsDb.name)
+        Log.d("STATE1", dhtDBCollection.toString())
     }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
