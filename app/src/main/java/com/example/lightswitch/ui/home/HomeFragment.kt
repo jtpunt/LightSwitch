@@ -46,7 +46,10 @@ class HomeFragment : Fragment() {
                     justOpened[idx] = true
                     toggleBtn.isChecked = true
                 }
-            }, Response.ErrorListener { })
+            }, Response.ErrorListener { error ->
+                Log.d("STATE1", "Response Error Caught: ${error}");
+            
+        })
     }
 
     fun setOnCheckedListener(
@@ -76,13 +79,16 @@ class HomeFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-                ViewModelProvider(this).get(HomeViewModel::class.java)
+        val toggleBtn1StatusURL: (String) = "http://192.168.254.202:5000/status/2";
+        val toggleBtn2StatusURL: (String) = "http://192.168.254.202:5000/status/3";
+        val toggleBtn1ActivateURL: String = "http://192.168.254.202:5000/activate/2";
+        val toggleBtn2ActivateURL: String = "http://192.168.254.202:5000/activate/3";
+
+        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         val textView: TextView = root.findViewById(R.id.text_home)
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+        homeViewModel.text.observe(viewLifecycleOwner, Observer {textView.text = it})
+
         Log.d("STATE1", "Before grabbing buttonIds")
         val toggleBtn1: (ToggleButton) = root.findViewById(R.id.toggleButton1);
         val toggleBtn2: (ToggleButton) = root.findViewById(R.id.toggleButton2);
@@ -90,30 +96,30 @@ class HomeFragment : Fragment() {
         Log.d("STATE1", "Before building request")
         val queue = Volley.newRequestQueue(context);
 
-
-
         // Make an HTTP get request to get the status of our relay switch - is it on or off?
         //  - if the relay switch is activated - change our toggle button to be set to "on",
         //  - so that when the app is first opened, the toggle buttons are correctly set
-        queue.add(buildStrRequests("http://192.168.254.202:5000/status/2", toggleBtn1, justOpened, 0));
-        queue.add(buildStrRequests("http://192.168.254.202:5000/status/3", toggleBtn2, justOpened, 1));
+        val toggleBtn1Status: (StringRequest?) = buildStrRequests(toggleBtn1StatusURL, toggleBtn1, justOpened, 0);
+        val toggleBtn2Status: (StringRequest?) = buildStrRequests(toggleBtn2StatusURL, toggleBtn2, justOpened, 1);
+        queue.add(toggleBtn1Status);
+        queue.add(toggleBtn2Status);
 
         // Set an event listener for when our button is turned on or off to make an HTTP request to turn
         // the relay switch on or off
-        setOnCheckedListener("http://192.168.254.202:5000/activate/2", toggleBtn1, justOpened, 0, queue);
-        setOnCheckedListener("http://192.168.254.202:5000/activate/3", toggleBtn2, justOpened, 1, queue);
+        setOnCheckedListener(toggleBtn1ActivateURL, toggleBtn1, justOpened, 0, queue);
+        setOnCheckedListener(toggleBtn2ActivateURL, toggleBtn2, justOpened, 1, queue);
         Log.d("STATE1", "DONE building request")
         var connString = MyApplication.connectionString;
         Log.d("STATE1", "Conn String in HomeFragment: ${connString}");
-        val uri: (MongoClientURI) =  MongoClientURI(connString);
-        val mongoClient: (MongoClient) = MongoClient(uri);
-        //val myDb: (MongoDatabase) = mongoClient.getDawwwwwwwwwwwwwtabase(uri.database);
-
-        val myDbs: MongoIterable<String> = mongoClient.listDatabaseNames();
-        val dhtSensorsDb = mongoClient.getDatabase("dht-sensors");
-        val dhtDBCollection: MongoIterable<String> = dhtSensorsDb.listCollectionNames();
-        Log.d("STATE1" , dhtSensorsDb.name)
-        Log.d("STATE1", dhtDBCollection.toString())
+//        val uri: (MongoClientURI) =  MongoClientURI(connString);
+//        val mongoClient: (MongoClient) = MongoClient(uri);
+//        //val myDb: (MongoDatabase) = mongoClient.getDatabase(uri.database);
+//
+//        val myDbs: MongoIterable<String> = mongoClient.listDatabaseNames();
+//        val dhtSensorsDb = mongoClient.getDatabase("dht-sensors");
+//        val dhtDBCollection: MongoIterable<String> = dhtSensorsDb.listCollectionNames();
+//        Log.d("STATE1" , dhtSensorsDb.name)
+//        Log.d("STATE1", dhtDBCollection.toString())
         return root
     }
 }
