@@ -21,6 +21,7 @@ import com.mongodb.MongoClient
 import com.mongodb.MongoClientURI
 import com.mongodb.client.MongoIterable
 
+
 class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
