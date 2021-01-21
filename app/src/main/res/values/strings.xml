@@ -10,6 +10,8 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="gpio_title">Pick a GPIO</string>
     <string name="pick_date">Pick a Date</string>
     <string name="pick_time">Pick a Time</string>
+    <string name="send">Send</string>
 </resources>
