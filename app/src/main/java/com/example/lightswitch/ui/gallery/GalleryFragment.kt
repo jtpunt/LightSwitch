@@ -121,7 +121,7 @@ class GalleryFragment : Fragment() {
             Log.d("STATE1", "Global Year = ${globalYear}")
             Log.d("STATE1", "Global Month = ${globalMonth}")
             Log.d("STATE1", "Global Day of Month = ${globalDayOfMonth}")
-            val postURL: (String) = "http://192.168.254.202:5000/schedule";
+            val postURL: (String) = "http://192.168.254.201:5000/schedule";
             val jsonBody: JSONObject = JSONObject();
             jsonBody.put("admin_id", "5f24a5ecc7522504fbebca19");
             val postStringRequest: (JsonObjectRequest?) = buildJSONRequests(postURL, jsonBody);
@@ -137,8 +137,6 @@ class GalleryFragment : Fragment() {
             // Apply the adapter to the spinner
             gpioSpinner.adapter = adapter
         }
-        var connString = MyApplication.connectionString;
-        Log.d("STATE1", "Conn String in HomeFragment: ${connString}");
         return root
     }
 }
