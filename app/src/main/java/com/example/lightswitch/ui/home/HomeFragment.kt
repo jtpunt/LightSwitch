@@ -17,9 +17,6 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.lightswitch.MyApplication
 import com.example.lightswitch.R
-import com.mongodb.MongoClient
-import com.mongodb.MongoClientURI
-import com.mongodb.client.MongoIterable
 
 
 class HomeFragment : Fragment() {
@@ -109,18 +106,6 @@ class HomeFragment : Fragment() {
         // the relay switch on or off
         setOnCheckedListener(toggleBtn1ActivateURL, toggleBtn1, justOpened, 0, queue);
         setOnCheckedListener(toggleBtn2ActivateURL, toggleBtn2, justOpened, 1, queue);
-        Log.d("STATE1", "DONE building request")
-        var connString = MyApplication.connectionString;
-        Log.d("STATE1", "Conn String in HomeFragment: ${connString}");
-//        val uri: (MongoClientURI) =  MongoClientURI(connString);
-//        val mongoClient: (MongoClient) = MongoClient(uri);
-//        //val myDb: (MongoDatabase) = mongoClient.getDatabase(uri.database);
-//
-//        val myDbs: MongoIterable<String> = mongoClient.listDatabaseNames();
-//        val dhtSensorsDb = mongoClient.getDatabase("dht-sensors");
-//        val dhtDBCollection: MongoIterable<String> = dhtSensorsDb.listCollectionNames();
-//        Log.d("STATE1" , dhtSensorsDb.name)
-//        Log.d("STATE1", dhtDBCollection.toString())
         return root
     }
 }
