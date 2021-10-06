@@ -26,8 +26,6 @@ class HomeFragment : Fragment() {
     fun buildStrRequests(
         url: String?,
         toggleBtn: ToggleButton,
-        justOpened: BooleanArray,
-        idx: Int
     ): StringRequest? {
         Log.d("STATE1", "In buildStrRequests");
         return StringRequest(
@@ -40,34 +38,22 @@ class HomeFragment : Fragment() {
                     toggleBtn.isChecked = false
                 } else if (response == "1") {
                     Log.d("STATE1", "Relay is ON")
-                    justOpened[idx] = true
                     toggleBtn.isChecked = true
                 }
             }, { error ->
                 Log.d("STATE1", "Response Error Caught: ${error}");
-
             })
     }
 
     fun setOnCheckedListener(
         url: String?,
         toggleBtn: ToggleButton,
-        justOpened: BooleanArray,
-        idx: Int,
         queue: RequestQueue
     ) {
         toggleBtn.setOnCheckedChangeListener { buttonView, isChecked ->
             Log.d("STATE1", "In setOnCheckListener");
             if (buttonView.isPressed) {
-                if (justOpened[idx]) {
-                    Log.d("STATE1", "button is pressed");
-                    justOpened[idx] = false
-                } else {
-                    Log.d("STATE1", "button is not pressed");
-                    queue.add(buildStrRequests(url, toggleBtn, justOpened, idx))
-
-
-                }
+                queue.add(buildStrRequests(url, toggleBtn))
             }
         }
     }
@@ -112,18 +98,17 @@ class HomeFragment : Fragment() {
         val toggleBtn3: (ToggleButton) = root.findViewById(R.id.toggleButton3);
         val toggleBtn4: (ToggleButton) = root.findViewById(R.id.toggleButton4);
 
-        val justOpened1: BooleanArray = BooleanArray(2);
-        val justOpened2: BooleanArray = BooleanArray(2);
+
         Log.d("STATE1", "Before building request")
         val queue = Volley.newRequestQueue(context);
 
         // Make an HTTP get request to get the status of our relay switch - is it on or off?
         //  - if the relay switch is activated - change our toggle button to be set to "on",
         //  - so that when the app is first opened, the toggle buttons are correctly set
-        val toggleBtn1Status: (StringRequest?) = buildStrRequests(toggleBtn1StatusURL, toggleBtn1, justOpened1, 0);
-        val toggleBtn2Status: (StringRequest?) = buildStrRequests(toggleBtn2StatusURL, toggleBtn2, justOpened1, 1);
-        val toggleBtn3Status: (StringRequest?) = buildStrRequests(toggleBtn3StatusURL, toggleBtn3, justOpened2, 0);
-        val toggleBtn4Status: (StringRequest?) = buildStrRequests(toggleBtn4StatusURL, toggleBtn4, justOpened2, 1);
+        val toggleBtn1Status: (StringRequest?) = buildStrRequests(toggleBtn1StatusURL, toggleBtn1);
+        val toggleBtn2Status: (StringRequest?) = buildStrRequests(toggleBtn2StatusURL, toggleBtn2);
+        val toggleBtn3Status: (StringRequest?) = buildStrRequests(toggleBtn3StatusURL, toggleBtn3);
+        val toggleBtn4Status: (StringRequest?) = buildStrRequests(toggleBtn4StatusURL, toggleBtn4);
 
         queue.add(toggleBtn1Status);
         queue.add(toggleBtn2Status);
@@ -132,10 +117,10 @@ class HomeFragment : Fragment() {
 
         // Set an event listener for when our button is turned on or off to make an HTTP request to turn
         // the relay switch on or off
-        setOnCheckedListener(toggleBtn1ActivateURL, toggleBtn1, justOpened1, 0, queue);
-        setOnCheckedListener(toggleBtn2ActivateURL, toggleBtn2, justOpened1, 1, queue);
-        setOnCheckedListener(toggleBtn3ActivateURL, toggleBtn3, justOpened2, 0, queue);
-        setOnCheckedListener(toggleBtn4ActivateURL, toggleBtn4, justOpened2, 1, queue);
+        setOnCheckedListener(toggleBtn1ActivateURL, toggleBtn1, queue);
+        setOnCheckedListener(toggleBtn2ActivateURL, toggleBtn2, queue);
+        setOnCheckedListener(toggleBtn3ActivateURL, toggleBtn3, queue);
+        setOnCheckedListener(toggleBtn4ActivateURL, toggleBtn4, queue);
         return root
     }
 
