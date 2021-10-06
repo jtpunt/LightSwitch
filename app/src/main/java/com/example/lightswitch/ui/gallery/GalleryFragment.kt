@@ -36,10 +36,10 @@ class GalleryFragment : Fragment() {
         jsonBody.put("admin", "5f24a5ecc7522504fbebca19");
         return StringRequest(
             Request.Method.GET, url,
-            Response.Listener { response ->
+            { response ->
                 // Display the first 500 characters of the response string.
                 Log.d("STATE1", response)
-            }, Response.ErrorListener { error ->
+            }, { error ->
                 Log.d("STATE1", "Response Error Caught: ${error}");
 
             }
@@ -54,8 +54,8 @@ class GalleryFragment : Fragment() {
             Request.Method.POST,
             url,
             jsonBody,
-            Response.Listener { response -> println(response) },
-            Response.ErrorListener { error -> error.printStackTrace() })
+            { response -> println(response) },
+            { error -> error.printStackTrace() })
     }
     // This property is only valid between onCreateView and
     // onDestroyView.

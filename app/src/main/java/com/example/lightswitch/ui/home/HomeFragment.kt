@@ -32,7 +32,7 @@ class HomeFragment : Fragment() {
         Log.d("STATE1", "In buildStrRequests");
         return StringRequest(
             Request.Method.GET, url,
-            Response.Listener { response ->
+            { response ->
                 // Display the first 500 characters of the response string.
                 Log.d("STATE1", response)
                 if (response == "0") { // the relay switch is off
@@ -43,7 +43,7 @@ class HomeFragment : Fragment() {
                     justOpened[idx] = true
                     toggleBtn.isChecked = true
                 }
-            }, Response.ErrorListener { error ->
+            }, { error ->
                 Log.d("STATE1", "Response Error Caught: ${error}");
 
             })
@@ -90,10 +90,15 @@ class HomeFragment : Fragment() {
 //        homeViewModel.text.observe(viewLifecycleOwner, Observer {
 //            textView.text = it
 //        })
-        val toggleBtn1StatusURL: (String) = "http://192.168.254.202:5000/status/2";
-        val toggleBtn2StatusURL: (String) = "http://192.168.254.202:5000/status/3";
-        val toggleBtn1ActivateURL: String = "http://192.168.254.202:5000/activate/2";
-        val toggleBtn2ActivateURL: String = "http://192.168.254.202:5000/activate/3";
+        val toggleBtn1StatusURL: (String) = "http://192.168.1.202:5000/outlet/status/gpio/2";
+        val toggleBtn2StatusURL: (String) = "http://192.168.1.202:5000/outlet/status/gpio/3";
+        val toggleBtn3StatusURL: (String) = "http://192.168.1.200:5000/outlet/status/gpio/2";
+        val toggleBtn4StatusURL: (String) = "http://192.168.1.200:5000/outlet/status/gpio/3";
+
+        val toggleBtn1ActivateURL: String = "http://192.168.1.202:5000/outlet/toggle/gpio/2";
+        val toggleBtn2ActivateURL: String = "http://192.168.1.202:5000/outlet/toggle/gpio/3";
+        val toggleBtn3ActivateURL: String = "http://192.168.1.200:5000/outlet/toggle/gpio/2";
+        val toggleBtn4ActivateURL: String = "http://192.168.1.200:5000/outlet/toggle/gpio/3";
 
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 //        val root = inflater.inflate(R.layout.fragment_home, container, false)
@@ -104,22 +109,33 @@ class HomeFragment : Fragment() {
         Log.d("STATE1", "Before grabbing buttonIds")
         val toggleBtn1: (ToggleButton) = root.findViewById(R.id.toggleButton1);
         val toggleBtn2: (ToggleButton) = root.findViewById(R.id.toggleButton2);
-        val justOpened: BooleanArray = BooleanArray(2);
+        val toggleBtn3: (ToggleButton) = root.findViewById(R.id.toggleButton3);
+        val toggleBtn4: (ToggleButton) = root.findViewById(R.id.toggleButton4);
+
+        val justOpened1: BooleanArray = BooleanArray(2);
+        val justOpened2: BooleanArray = BooleanArray(2);
         Log.d("STATE1", "Before building request")
         val queue = Volley.newRequestQueue(context);
 
         // Make an HTTP get request to get the status of our relay switch - is it on or off?
         //  - if the relay switch is activated - change our toggle button to be set to "on",
         //  - so that when the app is first opened, the toggle buttons are correctly set
-        val toggleBtn1Status: (StringRequest?) = buildStrRequests(toggleBtn1StatusURL, toggleBtn1, justOpened, 0);
-        val toggleBtn2Status: (StringRequest?) = buildStrRequests(toggleBtn2StatusURL, toggleBtn2, justOpened, 1);
+        val toggleBtn1Status: (StringRequest?) = buildStrRequests(toggleBtn1StatusURL, toggleBtn1, justOpened1, 0);
+        val toggleBtn2Status: (StringRequest?) = buildStrRequests(toggleBtn2StatusURL, toggleBtn2, justOpened1, 1);
+        val toggleBtn3Status: (StringRequest?) = buildStrRequests(toggleBtn3StatusURL, toggleBtn3, justOpened2, 0);
+        val toggleBtn4Status: (StringRequest?) = buildStrRequests(toggleBtn4StatusURL, toggleBtn4, justOpened2, 1);
+
         queue.add(toggleBtn1Status);
         queue.add(toggleBtn2Status);
+        queue.add(toggleBtn3Status);
+        queue.add(toggleBtn4Status);
 
         // Set an event listener for when our button is turned on or off to make an HTTP request to turn
         // the relay switch on or off
-        setOnCheckedListener(toggleBtn1ActivateURL, toggleBtn1, justOpened, 0, queue);
-        setOnCheckedListener(toggleBtn2ActivateURL, toggleBtn2, justOpened, 1, queue);
+        setOnCheckedListener(toggleBtn1ActivateURL, toggleBtn1, justOpened1, 0, queue);
+        setOnCheckedListener(toggleBtn2ActivateURL, toggleBtn2, justOpened1, 1, queue);
+        setOnCheckedListener(toggleBtn3ActivateURL, toggleBtn3, justOpened2, 0, queue);
+        setOnCheckedListener(toggleBtn4ActivateURL, toggleBtn4, justOpened2, 1, queue);
         return root
     }
 
