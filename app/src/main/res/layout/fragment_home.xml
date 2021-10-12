@@ -32,17 +32,16 @@
             android:orientation="horizontal">
 
             <ToggleButton
-                android:id="@+id/toggleButton2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ToggleButton" />
-
-            <ToggleButton
                 android:id="@+id/toggleButton1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ToggleButton"
                 android:textColor="#455A64" />
+            <ToggleButton
+                android:id="@+id/toggleButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ToggleButton" />
 
         </LinearLayout>
 
