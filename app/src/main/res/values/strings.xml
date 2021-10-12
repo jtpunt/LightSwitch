@@ -14,5 +14,8 @@
     <string name="gpio_title">Pick a GPIO</string>
     <string name="pick_date">Pick a Date</string>
     <string name="pick_time">Pick a Time</string>
+
+    <string name="deviceName1">Computer Room</string>
+    <string name="deviceName2">Living Room</string>
     <string name="send">Send</string>
 </resources>
