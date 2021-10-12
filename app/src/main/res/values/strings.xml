@@ -18,4 +18,9 @@
     <string name="deviceName1">Computer Room</string>
     <string name="deviceName2">Living Room</string>
     <string name="send">Send</string>
+
+    <string-array name="gpios_array">
+        <item>2</item>
+        <item>3</item>
+    </string-array>
 </resources>
