@@ -81,26 +81,26 @@ class HomeFragment : Fragment() {
          * on or off?
          * ********************************************************************************/
         // Jonathan and Thaerin's Living Room Smart Outlets
-        val toggleBtn1StatusURL: (String) = "http://192.168.1.202:5000/outlet/gpio/2/status";
-        val toggleBtn2StatusURL: (String) = "http://192.168.1.202:5000/outlet/gpio/3/status";
+        val toggleBtn1StatusURL = "http://192.168.1.202:5000/outlet/gpio/2/status";
+        val toggleBtn2StatusURL = "http://192.168.1.202:5000/outlet/gpio/3/status";
         // Jonathan and Thaerin's Computer Room Smart Outlets
-        val toggleBtn3StatusURL: (String) = "http://192.168.1.200:5000/outlet/gpio/2/status";
-        val toggleBtn4StatusURL: (String) = "http://192.168.1.200:5000/outlet/gpio/3/status";
+        val toggleBtn3StatusURL = "http://192.168.1.200:5000/outlet/gpio/2/status";
+        val toggleBtn4StatusURL = "http://192.168.1.200:5000/outlet/gpio/3/status";
         // Stephen and Lacey's Living Room Smart Outlets
-        val toggleBtn5StatusURL: (String) = "http://192.168.1.201:5000/outlet/gpio/2/status";
-        val toggleBtn6StatusURL: (String) = "http://192.168.1.201:5000/outlet/gpio/3/status";
+        val toggleBtn5StatusURL = "http://192.168.1.201:5000/outlet/gpio/2/status";
+        val toggleBtn6StatusURL = "http://192.168.1.201:5000/outlet/gpio/3/status";
         /***********************************************************************************
          * Define our API urls to toggle our smarts outlets on or off
          * ********************************************************************************/
         // Jonathan and Thaerin's Living Room Smart Outlets
-        val toggleBtn1ActivateURL: String = "http://192.168.1.202:5000/outlet/toggle/gpio/2";
-        val toggleBtn2ActivateURL: String = "http://192.168.1.202:5000/outlet/toggle/gpio/3";
+        val toggleBtn1ActivateURL = "http://192.168.1.202:5000/outlet/gpio/2/toggle";
+        val toggleBtn2ActivateURL = "http://192.168.1.202:5000/outlet/gpio/3/toggle";
         // Jonathan and Thaerin's Computer Room Smart Outlets
-        val toggleBtn3ActivateURL: String = "http://192.168.1.200:5000/outlet/gpio/2/toggle";
-        val toggleBtn4ActivateURL: String = "http://192.168.1.200:5000/outlet/gpio/3/toggle";
+        val toggleBtn3ActivateURL = "http://192.168.1.200:5000/outlet/gpio/2/toggle";
+        val toggleBtn4ActivateURL = "http://192.168.1.200:5000/outlet/gpio/3/toggle";
         // Stephen and Lacey's Living Room Smart Outlets
-        val toggleBtn5ActivateURL: String = "http://192.168.1.200:5000/outlet/gpio/2/toggle";
-        val toggleBtn6ActivateURL: String = "http://192.168.1.200:5000/outlet/gpio/3/toggle";
+        val toggleBtn5ActivateURL = "http://192.168.1.200:5000/outlet/gpio/2/toggle";
+        val toggleBtn6ActivateURL = "http://192.168.1.200:5000/outlet/gpio/3/toggle";
 
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 //        val root = inflater.inflate(R.layout.fragment_home, container, false)
