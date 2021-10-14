@@ -16,7 +16,8 @@
     <string name="pick_time">Pick a Time</string>
 
     <string name="deviceName1">Computer Room</string>
-    <string name="deviceName2">Living Room</string>
+    <string name="deviceName2">TJ Living Room</string>
+    <string name="deviceName3">LS Living Room</string>
     <string name="send">Send</string>
 
     <string-array name="gpios_array">

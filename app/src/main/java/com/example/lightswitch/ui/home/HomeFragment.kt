@@ -76,15 +76,31 @@ class HomeFragment : Fragment() {
 //        homeViewModel.text.observe(viewLifecycleOwner, Observer {
 //            textView.text = it
 //        })
-        val toggleBtn1StatusURL: (String) = "http://192.168.1.202:5000/outlet/status/gpio/2";
-        val toggleBtn2StatusURL: (String) = "http://192.168.1.202:5000/outlet/status/gpio/3";
-        val toggleBtn3StatusURL: (String) = "http://192.168.1.200:5000/outlet/status/gpio/2";
-        val toggleBtn4StatusURL: (String) = "http://192.168.1.200:5000/outlet/status/gpio/3";
-
+        /***********************************************************************************
+         * Define our API urls to retrieve the status of our smart outlets - are the outlets
+         * on or off?
+         * ********************************************************************************/
+        // Jonathan and Thaerin's Living Room Smart Outlets
+        val toggleBtn1StatusURL: (String) = "http://192.168.1.202:5000/outlet/gpio/2/status";
+        val toggleBtn2StatusURL: (String) = "http://192.168.1.202:5000/outlet/gpio/3/status";
+        // Jonathan and Thaerin's Computer Room Smart Outlets
+        val toggleBtn3StatusURL: (String) = "http://192.168.1.200:5000/outlet/gpio/2/status";
+        val toggleBtn4StatusURL: (String) = "http://192.168.1.200:5000/outlet/gpio/3/status";
+        // Stephen and Lacey's Living Room Smart Outlets
+        val toggleBtn5StatusURL: (String) = "http://192.168.1.201:5000/outlet/gpio/2/status";
+        val toggleBtn6StatusURL: (String) = "http://192.168.1.201:5000/outlet/gpio/3/status";
+        /***********************************************************************************
+         * Define our API urls to toggle our smarts outlets on or off
+         * ********************************************************************************/
+        // Jonathan and Thaerin's Living Room Smart Outlets
         val toggleBtn1ActivateURL: String = "http://192.168.1.202:5000/outlet/toggle/gpio/2";
         val toggleBtn2ActivateURL: String = "http://192.168.1.202:5000/outlet/toggle/gpio/3";
-        val toggleBtn3ActivateURL: String = "http://192.168.1.200:5000/outlet/toggle/gpio/2";
-        val toggleBtn4ActivateURL: String = "http://192.168.1.200:5000/outlet/toggle/gpio/3";
+        // Jonathan and Thaerin's Computer Room Smart Outlets
+        val toggleBtn3ActivateURL: String = "http://192.168.1.200:5000/outlet/gpio/2/toggle";
+        val toggleBtn4ActivateURL: String = "http://192.168.1.200:5000/outlet/gpio/3/toggle";
+        // Stephen and Lacey's Living Room Smart Outlets
+        val toggleBtn5ActivateURL: String = "http://192.168.1.200:5000/outlet/gpio/2/toggle";
+        val toggleBtn6ActivateURL: String = "http://192.168.1.200:5000/outlet/gpio/3/toggle";
 
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 //        val root = inflater.inflate(R.layout.fragment_home, container, false)
@@ -93,11 +109,17 @@ class HomeFragment : Fragment() {
         homeViewModel.text.observe(viewLifecycleOwner, Observer {textView.text = it})
 
         Log.d("STATE1", "Before grabbing buttonIds")
+        // toggle buttons to turn Jonathan and Thaerin's Living Room Smart Outlets on or off
         val toggleBtn1: (ToggleButton) = root.findViewById(R.id.toggleButton1);
         val toggleBtn2: (ToggleButton) = root.findViewById(R.id.toggleButton2);
+
+        // toggle buttons to turn Jonathan and Thaerin's Computer Room Smart Outlets on or off
         val toggleBtn3: (ToggleButton) = root.findViewById(R.id.toggleButton3);
         val toggleBtn4: (ToggleButton) = root.findViewById(R.id.toggleButton4);
 
+        // toggle buttons to turn Stephen and Laceu's Living Room Smart Outlets on or off
+        val toggleBtn5: (ToggleButton) = root.findViewById(R.id.toggleButton5);
+        val toggleBtn6: (ToggleButton) = root.findViewById(R.id.toggleButton6);
 
         Log.d("STATE1", "Before building request")
         val queue = Volley.newRequestQueue(context);
@@ -107,13 +129,20 @@ class HomeFragment : Fragment() {
         //  - so that when the app is first opened, the toggle buttons are correctly set
         val toggleBtn1Status: (StringRequest?) = buildStrRequests(toggleBtn1StatusURL, toggleBtn1);
         val toggleBtn2Status: (StringRequest?) = buildStrRequests(toggleBtn2StatusURL, toggleBtn2);
+
         val toggleBtn3Status: (StringRequest?) = buildStrRequests(toggleBtn3StatusURL, toggleBtn3);
         val toggleBtn4Status: (StringRequest?) = buildStrRequests(toggleBtn4StatusURL, toggleBtn4);
 
+        val toggleBtn5Status: (StringRequest?) = buildStrRequests(toggleBtn5StatusURL, toggleBtn5);
+        val toggleBtn6Status: (StringRequest?) = buildStrRequests(toggleBtn6StatusURL, toggleBtn6);
+
+        // Make the HTTP GET requests to all of our smart outlets
         queue.add(toggleBtn1Status);
         queue.add(toggleBtn2Status);
         queue.add(toggleBtn3Status);
         queue.add(toggleBtn4Status);
+        queue.add(toggleBtn5Status);
+        queue.add(toggleBtn6Status);
 
         // Set an event listener for when our button is turned on or off to make an HTTP request to turn
         // the relay switch on or off
@@ -121,6 +150,9 @@ class HomeFragment : Fragment() {
         setOnCheckedListener(toggleBtn2ActivateURL, toggleBtn2, queue);
         setOnCheckedListener(toggleBtn3ActivateURL, toggleBtn3, queue);
         setOnCheckedListener(toggleBtn4ActivateURL, toggleBtn4, queue);
+        setOnCheckedListener(toggleBtn5ActivateURL, toggleBtn5, queue);
+        setOnCheckedListener(toggleBtn6ActivateURL, toggleBtn6, queue);
+
         return root
     }
 
