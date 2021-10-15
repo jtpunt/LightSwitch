@@ -99,8 +99,8 @@ class HomeFragment : Fragment() {
         val toggleBtn3ActivateURL = "http://192.168.1.200:5000/outlet/gpio/2/toggle";
         val toggleBtn4ActivateURL = "http://192.168.1.200:5000/outlet/gpio/3/toggle";
         // Stephen and Lacey's Living Room Smart Outlets
-        val toggleBtn5ActivateURL = "http://192.168.1.200:5000/outlet/gpio/2/toggle";
-        val toggleBtn6ActivateURL = "http://192.168.1.200:5000/outlet/gpio/3/toggle";
+        val toggleBtn5ActivateURL = "http://192.168.1.201:5000/outlet/gpio/2/toggle";
+        val toggleBtn6ActivateURL = "http://192.168.1.201:5000/outlet/gpio/3/toggle";
 
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 //        val root = inflater.inflate(R.layout.fragment_home, container, false)
